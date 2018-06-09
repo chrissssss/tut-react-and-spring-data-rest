@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @Controller
 class HomeController {
 
@@ -31,4 +30,3 @@ class HomeController {
     }
 
 }
-// end::code[]

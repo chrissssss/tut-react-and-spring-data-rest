@@ -29,7 +29,6 @@ import org.springframework.stereotype.Component
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @Component
 @RepositoryEventHandler(Employee::class)
 class EventHandler @Autowired
@@ -64,4 +63,3 @@ constructor(private val websocket: SimpMessagingTemplate, private val entityLink
     }
 
 }
-// end::code[]

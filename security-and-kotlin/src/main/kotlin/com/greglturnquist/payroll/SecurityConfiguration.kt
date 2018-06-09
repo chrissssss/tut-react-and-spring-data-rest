@@ -27,7 +27,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -66,4 +65,3 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     }
 
 }
-// end::code[]

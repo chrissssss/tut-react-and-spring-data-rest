@@ -19,13 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.AuthorityUtils
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @Component
 class DatabaseLoader @Autowired
 constructor(val employees: EmployeeRepository,
@@ -35,30 +35,33 @@ constructor(val employees: EmployeeRepository,
     override fun run(vararg strings: String) {
 
         val greg = managers.save(
-                Manager("greg", SecurityConfiguration.PASSWORD_ENCODER.encode("turnquist"), "ROLE_MANAGER")
+                Manager(name = "greg", password = SecurityConfiguration.PASSWORD_ENCODER.encode("turnquist"), roles = listOf("ROLE_MANAGER"))
         )
 
         val oliver = managers.save(
-                Manager("oliver", SecurityConfiguration.PASSWORD_ENCODER.encode("gierke"), "ROLE_MANAGER")
+                Manager(name = "oliver", password = SecurityConfiguration.PASSWORD_ENCODER.encode("gierke"), roles = listOf("ROLE_MANAGER"))
         )
 
         SecurityContextHolder.getContext().setAuthentication(
                 UsernamePasswordAuthenticationToken("greg", "doesn't matter",
                         AuthorityUtils.createAuthorityList("ROLE_MANAGER")))
 
-        employees.save(Employee("Frodo", "Baggins", "ring bearer", greg))
-        employees.save(Employee("Bilbo", "Baggins", "burglar", greg))
-        employees.save(Employee("Gandalf", "the Grey", "wizard", greg))
+        employees.save(Employee(firstName = "Frodo", lastName = "Baggins", description = "ring bearer", manager = greg))
+        employees.save(Employee(firstName = "Bilbo", lastName = "Baggins", description = "burglar", manager = greg))
+        employees.save(Employee(firstName = "Gandalf", lastName = "the Grey", description = "wizard", manager = greg))
 
         SecurityContextHolder.getContext().setAuthentication(
                 UsernamePasswordAuthenticationToken("oliver", "doesn't matter",
-                        AuthorityUtils.createAuthorityList("ROLE_MANAGER")))
+                        mapToAuthorities(listOf("ROLE_MANAGER"))
+                ))
 
-        employees.save(Employee("Samwise", "Gamgee", "gardener", oliver))
-        employees.save(Employee("Merry", "Brandybuck", "pony rider", oliver))
-        employees.save(Employee("Peregrin", "Took", "pipe smoker", oliver))
+        employees.save(Employee(firstName = "Samwise", lastName = "Gamgee", description = "gardener", manager = oliver))
+        employees.save(Employee(firstName = "Merry", lastName = "Brandybuck", description = "pony rider", manager = oliver))
+        employees.save(Employee(firstName = "Peregrin", lastName = "Took", description = "pipe smoker", manager = oliver))
 
         SecurityContextHolder.clearContext()
     }
+
 }
-// end::code[]
+
+fun mapToAuthorities(y: List<String>) = y.map { SimpleGrantedAuthority(it) }

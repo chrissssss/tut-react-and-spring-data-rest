@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @Component
 @RepositoryEventHandler(Employee::class)
 class SpringDataRestEventHandler @Autowired
@@ -38,10 +37,9 @@ constructor(private val managerRepository: ManagerRepository) {
         val name = SecurityContextHolder.getContext().getAuthentication().getName()
         var manager = this.managerRepository.findByName(name)
         if (manager == null) {
-            val newManager = Manager(name, "ROLE_MANAGER")
+            val newManager = Manager(name = name, roles = listOf("ROLE_MANAGER"))
             manager = this.managerRepository.save(newManager)
         }
         employee.manager = manager
     }
 }
-// end::code[]

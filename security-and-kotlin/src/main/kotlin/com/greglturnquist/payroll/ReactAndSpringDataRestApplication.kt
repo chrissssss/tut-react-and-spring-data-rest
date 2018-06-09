@@ -21,12 +21,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @SpringBootApplication
 class ReactAndSpringDataRestApplication
 
 fun main(args: Array<String>) {
     SpringApplication.run(ReactAndSpringDataRestApplication::class.java, *args)
 }
-
-// end::code[]

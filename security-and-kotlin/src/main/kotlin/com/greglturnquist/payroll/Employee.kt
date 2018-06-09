@@ -15,72 +15,30 @@
  */
 package com.greglturnquist.payroll
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.ManyToOne
-import javax.persistence.Version
-
 import com.fasterxml.jackson.annotation.JsonIgnore
-
-import java.util.Objects
+import javax.persistence.*
 
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @Entity
-class Employee {
+class Employee(
 
-    @Id
-    @GeneratedValue
-    var id: Long? = null
-    var firstName: String? = null
-    var lastName: String? = null
-    var description: String? = null
+        @Id
+        @GeneratedValue
+        var id: Long? = null,
 
-    @Version
-    @JsonIgnore
-    var version: Long? = null
+        var firstName: String? = null,
 
-    @ManyToOne
-    var manager: Manager? = null
+        var lastName: String? = null,
 
-    private constructor() {}
+        var description: String? = null,
 
-    constructor(firstName: String, lastName: String, description: String, manager: Manager) {
-        this.firstName = firstName
-        this.lastName = lastName
-        this.description = description
-        this.manager = manager
-    }
+        @Version
+        @JsonIgnore
+        var version: Long? = null,
 
-    override fun toString(): String {
-        return "Employee{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\''.toString() +
-                ", lastName='" + lastName + '\''.toString() +
-                ", description='" + description + '\''.toString() +
-                ", version=" + version +
-                ", manager=" + manager +
-                '}'.toString()
-    }
+        @ManyToOne
+        var manager: Manager? = null
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val employee = o as Employee?
-        return id == employee!!.id &&
-                firstName == employee.firstName &&
-                lastName == employee.lastName &&
-                description == employee.description &&
-                version == employee.version &&
-                manager == employee.manager
-    }
-
-    override fun hashCode(): Int {
-
-        return Objects.hash(id, firstName, lastName, description, version, manager)
-    }
-}
-// end::code[]
+)

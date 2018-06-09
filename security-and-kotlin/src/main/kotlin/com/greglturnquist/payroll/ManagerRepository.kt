@@ -21,7 +21,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @RepositoryRestResource(exported = false)
 interface ManagerRepository : Repository<Manager, Long> {
 
@@ -30,4 +29,3 @@ interface ManagerRepository : Repository<Manager, Long> {
     fun findByName(name: String): Manager
 
 }
-// end::code[]

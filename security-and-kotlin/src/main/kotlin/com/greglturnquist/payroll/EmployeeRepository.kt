@@ -22,7 +22,6 @@ import org.springframework.security.access.prepost.PreAuthorize
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 interface EmployeeRepository : PagingAndSortingRepository<Employee, Long> {
 
@@ -36,4 +35,3 @@ interface EmployeeRepository : PagingAndSortingRepository<Employee, Long> {
     override fun delete(@Param("employee") employee: Employee)
 
 }
-// end::code[]

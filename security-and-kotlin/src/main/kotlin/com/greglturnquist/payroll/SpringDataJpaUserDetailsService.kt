@@ -26,7 +26,6 @@ import org.springframework.stereotype.Component
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @Component
 class SpringDataJpaUserDetailsService @Autowired
 constructor(private val repository: ManagerRepository) : UserDetailsService {
@@ -34,8 +33,7 @@ constructor(private val repository: ManagerRepository) : UserDetailsService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(name: String): UserDetails {
         val manager = repository.findByName(name)
-        return User(manager.name, manager.password, AuthorityUtils.createAuthorityList(*manager.roles))
+        return User(manager.name, manager.password, mapToAuthorities(manager.roles!!))
     }
 
 }
-// end::code[]
